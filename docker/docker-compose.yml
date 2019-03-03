@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  postgresql:
+    build: postgresql
+    container_name: jooq-flyway-spboot-sample-postgresql
+    volumes:
+      - ./postgresql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"

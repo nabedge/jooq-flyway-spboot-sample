@@ -1,0 +1,4 @@
+rootProject.name = 'jooq-flyway-spboot-sample'
+include 'pj-db'
+include 'pj-db-custom-strategy'
+

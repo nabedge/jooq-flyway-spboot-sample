@@ -1,0 +1,73 @@
+//
+
+def dbUrl = "jdbc:postgresql://${dbHost}:${dbPort}/${dbName}"
+def jdbcDriver = "org.postgresql.Driver"
+def jooqDestDir = "$buildDir/jooq-gen/"
+def jooqDestPackage = 'com.example.db.jooq.gen'
+
+buildscript {
+    dependencies {
+        // コード生成用の依存モジュール定義
+        classpath 'nu.studer:gradle-jooq-plugin:3.0.2'
+        classpath group: "org.flywaydb", name: "flyway-gradle-plugin", version: "${flywayVersion}"
+        classpath group: 'org.postgresql', name: 'postgresql', version: "${postgresqlDriverVersion}"
+    }
+}
+
+apply plugin: "org.flywaydb.flyway"
+apply plugin: 'nu.studer.jooq'
+
+dependencies {
+    compile "org.jooq:jooq:${jooqVersion}"
+    jooqRuntime group: 'org.postgresql', name: 'postgresql', version: "${postgresqlDriverVersion}"
+    jooqRuntime 'org.slf4j:slf4j-simple:1.7.25'
+    jooqRuntime project(':pj-db-custom-strategy')
+}
+
+flyway {
+    url = "${dbUrl}"
+    user = "${dbUser}"
+    password = "${dbPassword}"
+}
+
+jooq {
+    version = "${jooqVersion}"
+    edition = 'OSS' // if you use oracle, you should pay :-)
+
+    // the name "sample" -> task name "generateSampleJooqSchemaSource" . see below.
+    sample (sourceSets.main) {
+        jdbc {
+            driver = "${jdbcDriver}"
+            url = "${dbUrl}"
+            user = "${dbUser}"
+            password = "${dbPassword}"
+        }
+        generator {
+            target {
+                packageName = "${jooqDestPackage}"
+                directory = "${jooqDestDir}"
+            }
+            strategy {
+                name = 'com.example.db.jooq.generator.SamplePrefixGeneratorStrategy'
+            }
+            database() {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = "public"
+            }
+            generate() {
+                daos = true
+                immutablePojos = true
+                pojosEqualsAndHashCode = true
+            }
+        }
+    }
+}
+
+compileJava {
+    dependsOn flywayMigrate, generateSampleJooqSchemaSource
+    sourceSets.main.java.srcDirs(jooqDestDir)
+}
+
+clean {
+    delete jooqDestDir
+}
