@@ -8,7 +8,7 @@ def jooqDestPackage = 'com.example.db.jooq.gen'
 buildscript {
     dependencies {
         // コード生成用の依存モジュール定義
-        classpath group: "nu.studer", name:"gradle-jooq-plugin", version:"3.0.2"
+        classpath group: "nu.studer", name:"gradle-jooq-plugin", version:"3.0.3"
         classpath group: "org.flywaydb", name: "flyway-gradle-plugin", version: "${flywayVersion}"
         classpath group: 'org.postgresql', name: 'postgresql', version: "${postgresqlDriverVersion}"
     }
