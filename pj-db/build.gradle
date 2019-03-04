@@ -8,17 +8,19 @@ def jooqDestPackage = 'com.example.db.jooq.gen'
 buildscript {
     dependencies {
         // コード生成用の依存モジュール定義
-        classpath 'nu.studer:gradle-jooq-plugin:3.0.2'
+        classpath group: "nu.studer", name:"gradle-jooq-plugin", version:"3.0.2"
         classpath group: "org.flywaydb", name: "flyway-gradle-plugin", version: "${flywayVersion}"
         classpath group: 'org.postgresql', name: 'postgresql', version: "${postgresqlDriverVersion}"
     }
 }
 
 apply plugin: "org.flywaydb.flyway"
-apply plugin: 'nu.studer.jooq'
+apply plugin: "nu.studer.jooq"
 
 dependencies {
-    compile "org.jooq:jooq:${jooqVersion}"
+    compile group: "org.jooq", name:"jooq", version:"${jooqVersion}"
+    testCompile group: "org.flywaydb", name:"flyway-core", version: "${flywayVersion}"
+    testCompile group: "org.springframework.boot", name:"spring-boot-starter-data-jdbc", version:"${springBootVersion}"
     jooqRuntime group: 'org.postgresql', name: 'postgresql', version: "${postgresqlDriverVersion}"
     jooqRuntime 'org.slf4j:slf4j-simple:1.7.25'
     jooqRuntime project(':pj-db-custom-strategy')
