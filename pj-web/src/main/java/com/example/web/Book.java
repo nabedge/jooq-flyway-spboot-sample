@@ -1,5 +1,6 @@
 package com.example.web;
 
+import java.time.Duration;
 import java.time.LocalDate;
 
 public class Book {
@@ -7,6 +8,10 @@ public class Book {
     private String title;
     private String isbn;
     private LocalDate publishDate;
+
+    public long daysAgo() {
+        return Duration.between(publishDate, LocalDate.now()).toDays();
+    }
 
     public String getTitle() {
         return title;

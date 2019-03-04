@@ -23,7 +23,11 @@ public class BookRepository {
         final JBook jBook = JBook.BOOK;
 
         final List<BookVo> selected = dslContext
-                .select(jBook.ISBN, jBook.PUBLISH_DATE, jBook.PUBLISH_DATE)
+                .select(
+                        jBook.ISBN,
+                        jBook.PUBLISH_DATE,
+                        jBook.PUBLISH_DATE
+                )
                 .from(jBook)
                 .orderBy(jBook.PUBLISH_DATE)
                 .fetchInto(BookVo.class);
