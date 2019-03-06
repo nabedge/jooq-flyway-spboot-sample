@@ -1,8 +1,7 @@
 #!/bin/bash
 
 docker-compose -f ./docker/docker-compose.yml down
-docker-compose -f ./docker/docker-compose.yml build
-docker-compose -f ./docker/docker-compose.yml up -d
+docker-compose -f ./docker/docker-compose.yml up -d --build
 
 alive_postgresql=0
 while [ $alive_postgresql -lt 1 ]

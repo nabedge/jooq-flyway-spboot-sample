@@ -1,6 +1,11 @@
+apply plugin:'application'
+
+mainClassName = "com.example.web.SampleApplication"
+
 dependencies {
     compile group:"org.springframework.boot", name:"spring-boot-starter-web", version:"${springBootVersion}"
     compile group:"org.springframework.boot", name:"spring-boot-starter-thymeleaf", version:"${springBootVersion}"
     compile group:"org.springframework.boot", name:"spring-boot-starter-jdbc", version:"${springBootVersion}"
+    runtime group: 'org.postgresql', name: 'postgresql', version: "${postgresqlDriverVersion}"
     compile project(":pj-db")
 }
