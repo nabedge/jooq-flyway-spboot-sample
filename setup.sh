@@ -13,6 +13,7 @@ do
     sleep 2
 done
 
+sh ./gradlew flywayMigrate -p pj-db
 sh ./gradlew clean build -p pj-db
 sh ./gradlew flywayMigrate -Dflyway.locations=classpath:testdata
 
