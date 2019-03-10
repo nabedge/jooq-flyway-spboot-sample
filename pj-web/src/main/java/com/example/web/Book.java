@@ -9,8 +9,11 @@ public class Book {
     private String isbn;
     private LocalDate publishDate;
 
-    public long daysAgo() {
-        return Duration.between(publishDate, LocalDate.now()).toDays();
+    public long getDaysAgo() {
+        return Duration.between(
+                publishDate.atStartOfDay(),
+                LocalDate.now().atStartOfDay()
+        ).toDays();
     }
 
     public String getTitle() {
