@@ -1,5 +1,6 @@
 # requirement
 * docker, docker-compose (ex. Docker for Mac)
+* **"psql"** command . (on Mac OS, "brew install postgresql")
 * JDK8 or later
 
 # usage
